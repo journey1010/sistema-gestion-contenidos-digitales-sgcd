@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoginRequest;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Auth;
+
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
+
 use App\Models\User;
+
 
 class AuthController extends Controller
 {
@@ -60,5 +64,26 @@ class AuthController extends Controller
               'message' => 'Ocurrio un problema al generar al token',
             ], 401);
           }
+    }
+
+    public function register(RegisterRequest $request)
+    {
+      try {
+        User::saveUser(
+          $request->name,
+          $request->email,
+          $request->password,
+          $request->rol,
+        );
+        return response()->json([
+          'status' => 'success',
+          'message' => 'Nuevo cuenta de usuario agregada',
+        ], 200);         
+      } catch(\Exception $e){
+        return response()->json([
+          'status' => 'error',
+          'message' => 'Ocurrio un error inesperado al guardar!'
+        ], 500);
+      }
     }
 }

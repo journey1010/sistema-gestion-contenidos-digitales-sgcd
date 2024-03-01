@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -56,5 +57,15 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public static function saveUser(string $name, string $email, string $password, int $rol): void
+    {
+        $user  = User::insert([
+            'name' => $name,
+            'email' => $email,
+            'password' => Hash::make($password),
+            'rol' => $rol,
+        ]); 
     }
 }
