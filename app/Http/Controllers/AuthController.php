@@ -10,7 +10,6 @@ use App\Http\Requests\RegisterRequest;
 
 use App\Models\User;
 
-
 class AuthController extends Controller
 {
     public function __construct()
