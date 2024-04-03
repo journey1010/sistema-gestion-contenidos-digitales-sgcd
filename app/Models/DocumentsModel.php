@@ -20,8 +20,15 @@ class DocumentsModel extends Model
         'path_file'
     ];
 
-    public static function saveDoc()
+    public static function saveDoc(int $typeDoc, int $userId, string $title, string $description, string $originalName, string $pathFile)
     {
-        
+        return self::create([
+            'type_doc_id' => $typeDoc,
+            'user_id' => $userId,
+            'title' => $title,
+            'description' => $description,
+            'original_file_name' => $originalName,
+            'path_file' => $pathFile
+        ]);
     }
 }

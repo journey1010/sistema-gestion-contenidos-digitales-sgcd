@@ -41,6 +41,7 @@ class SaveDocRequest extends FormRequest
             'userId' => 'required|numeric',
             'title' => 'required|string|max:255',
             'description' => 'string|max:1000',
+            'file' => 'mimes:doc,docx,xlsx,xls,pdf'
         ];
     }
 
