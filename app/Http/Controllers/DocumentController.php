@@ -16,7 +16,7 @@ class DocumentController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except'=> ['listDocPerUser', 'listTypeDoc', 'listDocAll']]);
+        $this->middleware('auth', ['except'=> ['listDocPerUser', 'listTypeDoc', 'listDocAll', 'listDocPerType']]);
     }
 
     public function save(SaveDocRequest $request): JsonResponse
@@ -66,6 +66,29 @@ class DocumentController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Estamos experimentando problemas'
+            ], 500);
+        }
+    }
+
+    public function listDocPerType(Paginate $request): JsonResponse
+    {
+        try{
+            if($request->has('typeDocId')){
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Debe proporcionar el ID del tipo de documento',
+                ], 422);
+            }
+            $list = DocumentsModel::listDocPerType($request->itemsPerPage,$request->page, $request->typeDocId);
+            return response()->json([
+                'status' => 'success',
+                'data' => $list['items'],
+                'total_items' => $list['total_items']
+            ], 200);
+        }catch(Exception $e ){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Registro no guardado'
             ], 500);
         }
     }

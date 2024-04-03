@@ -47,4 +47,20 @@ class DocumentsModel extends Model
 
         return $list;
     }  
+
+    public static function listDocPerType(int $itemsPerPage = 4, int $page =1, int $typeDocId)
+    {   
+        $lists = DB::table('docs as d')
+                ->select('d.title', 'd.description', 'd.path_file as file', 't.name')
+                ->join('type_docs as t', 'd.type_doc_id', '=', 't.id')
+                ->where('d.type_doc_id', '=', $typeDocId)
+                ->orderByDesc('d.created_at')
+                ->paginate($itemsPerPage, ['*'], 'page', $page);
+        $list =[
+            'items' => $lists->items(),
+            'total_items' => $lists->total(),
+        ];
+
+        return $list;
+    }  
 }

@@ -13,3 +13,4 @@ Route::post('/doc/new', [DocumentController::class, 'save']);
 Route::post('/doc/type-doc/new', [DocumentController::class, 'saveTypeDoc']);
 Route::get('/doc/type-doc/list', [DocumentController::class,'listTypeDoc']);
 Route::get('/doc/list/all', [DocumentController::class, 'listDocAll']);
+Route::get('/doc/list/type', [DocumentController::class, 'listDocPerType']);
