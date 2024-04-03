@@ -16,7 +16,7 @@ class DocumentController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except'=> ['listDocPerUser', 'listTypeDoc']]);
+        $this->middleware('auth', ['except'=> ['listDocPerUser', 'listTypeDoc', 'listDocAll']]);
     }
 
     public function save(SaveDocRequest $request): JsonResponse
@@ -56,9 +56,11 @@ class DocumentController extends Controller
     public function listDocAll(Paginate $request): JsonResponse
     {
         try{
-
+            $list = DocumentsModel::listAllDoc($request->itemsPerPage, $request->page);
             return response()->json([
                 'status' => 'success',
+                'data' => $list['items'],
+                'total_items' => $list['total_items']
             ], 200);
         }catch(Exception $e){
             return response()->json([

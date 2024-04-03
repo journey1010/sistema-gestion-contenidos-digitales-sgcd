@@ -12,3 +12,4 @@ Route::post('/auth/refresh', [AuthController::class,  'refreshToken']);
 Route::post('/doc/new', [DocumentController::class, 'save']);
 Route::post('/doc/type-doc/new', [DocumentController::class, 'saveTypeDoc']);
 Route::get('/doc/type-doc/list', [DocumentController::class,'listTypeDoc']);
+Route::get('/doc/list/all', [DocumentController::class, 'listDocAll']);

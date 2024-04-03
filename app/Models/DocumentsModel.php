@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class DocumentsModel extends Model
 {
@@ -31,4 +32,19 @@ class DocumentsModel extends Model
             'path_file' => $pathFile
         ]);
     }
+
+    public static function listAllDoc(int $itemsPerPage = 4, int $page =1)
+    {   
+        $lists = DB::table('docs as d')
+                ->select('d.title', 'd.description', 'd.path_file as file', 't.name')
+                ->join('type_docs as t', 'd.type_doc_id', '=', 't.id')
+                ->orderByDesc('d.created_at')
+                ->paginate($itemsPerPage, ['*'], 'page', $page);
+        $list =[
+            'items' => $lists->items(),
+            'total_items' => $lists->total(),
+        ];
+
+        return $list;
+    }  
 }
