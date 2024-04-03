@@ -1,8 +1,12 @@
 <?php
-/*
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+
+use App\Models\Banners;
 
 class BannerController extends Controller
 {
@@ -11,7 +15,7 @@ class BannerController extends Controller
         $this->middleware('auth:api', ['except' => ['getBanners']]);
     }
 
-    public function createBanner(Request $request)
+    public function createBanner(Request $request): JsonResponse
     {
         try {
             $request->validate([
@@ -22,11 +26,7 @@ class BannerController extends Controller
                   'dimensions: min-width=1000|min-height:500', 
                 ],
               ]);              
-        } catch(ValidationException $e){
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 400);
-        }
-
-        try{
+ 
             if ($request->hasFile('files')) {
                 foreach ($request->file('files') as $file) {
                     $filename = $file->getClientOriginalName();
@@ -34,30 +34,39 @@ class BannerController extends Controller
                     $unique_name = date('YmdHis') . rand(10,99);
         
                     $path = $file->storeAs(
-
                         'banners/' . date('Y/m'),
                         $unique_name . '.' . $extension,
                         'public'
                     );
-                    BannerModel::create([
-                        'original_name' => $filename,
-                        'unique_name' => $unique_name,
-                        'type_file' => $extension,
-                        'path_file' => $path,
-                        'status'  => 1,
-                        'date_create' => date('Y-m-d H:i:s')
-                    ]);
+                    Banners::saveBanner(
+                        $extension,
+                        $path,
+                    );
                 }
-                return response()->json(['status' => 'success', 'message' => 'Banner registered successfuly'], 201);
+                return response()->json([
+                    'status' => 'success',
+                     'message' => 'Banner Guardado'
+                ], 201);
             }
-            return response()->json(['status' => 'error', 'message' => 'Files are required'], 500);
+            return response()->json([
+                'status' => 'error',
+                 'message' => 'Files are required'
+            ], 500);
+        } catch(ValidationException $e){
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 400);
         } catch (\Exception $e) {
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
+            return response()->json([
+                'status' => 'error', 
+                'message' => $e->getMessage()
+            ], 500);
         }
     }
 
 
-    public function getBanners (Request $request) 
+    public function getBanners (Request $request): JsonResponse
     {
         $request->validate(['numberItems' => 'required|numeric' ]);
         try {
@@ -68,7 +77,7 @@ class BannerController extends Controller
         }
     }
 
-    public function deleteBanner(Request $request)
+    public function deleteBanner(Request $request): JsonResponse
     {
         try{
             $request->validate(['idBanner' => 'required|numeric']);
@@ -80,5 +89,3 @@ class BannerController extends Controller
         }
     }
 } 
-
-*/
