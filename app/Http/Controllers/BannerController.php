@@ -57,7 +57,7 @@ class BannerController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => $e->getMessage()
-            ], 400);
+            ], 422);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error', 
@@ -75,6 +75,11 @@ class BannerController extends Controller
                 'status'=> 'success',
                 'data' => $images
             ], 200);
+        } catch(ValidationException $e){
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 400);
         }  catch(\Exception $e){
             return response()->json([
                 'status'=>'error', 

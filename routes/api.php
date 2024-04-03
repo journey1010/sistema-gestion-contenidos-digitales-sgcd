@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
@@ -17,5 +16,5 @@ Route::get('/doc/list/all', [DocumentController::class, 'listDocAll']);
 Route::get('/doc/list/type', [DocumentController::class, 'listDocPerType']);
 Route::post('/banner/new', [BannerController::class, 'createBanner']);
 Route::get('/banner/list', [BannerController::class, 'getBanners']);
-Route::delete('/banner', [BannerController::class, 'delete']);
+Route::delete('/banner/single', [BannerController::class, 'delete']);
 
