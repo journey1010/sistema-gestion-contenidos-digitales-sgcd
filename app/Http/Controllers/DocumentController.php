@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\UploadedFile;
 use App\Http\Requests\Doc\SaveDocRequest;
 use App\Http\Requests\Doc\TypeDoc;
+use App\Http\Requests\Paginate;
 use App\Models\DocumentsModel;
 use App\Models\TypeDoc as TypeDocModel;
 
@@ -48,6 +49,21 @@ class DocumentController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Registro no guardado'
+            ], 500);
+        }
+    }
+
+    public function listDocAll(Paginate $request): JsonResponse
+    {
+        try{
+
+            return response()->json([
+                'status' => 'success',
+            ], 200);
+        }catch(Exception $e){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Estamos experimentando problemas'
             ], 500);
         }
     }
