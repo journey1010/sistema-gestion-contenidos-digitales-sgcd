@@ -36,7 +36,7 @@ class TypeDoc extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'description' => 'string|max:255',
+            'description' => 'nullable|string|max:255',
         ];
     }
 

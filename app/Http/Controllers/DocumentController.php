@@ -6,14 +6,16 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\UploadedFile;
 use App\Http\Requests\Doc\SaveDocRequest;
+use App\Http\Requests\Doc\TypeDoc;
 use App\Models\DocumentsModel;
+use App\Models\TypeDoc as TypeDocModel;
 
 class DocumentController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth', ['except'=> ['listDocPerUser']]);
+        $this->middleware('auth', ['except'=> ['listDocPerUser', 'listTypeDoc']]);
     }
 
     public function save(SaveDocRequest $request): JsonResponse
@@ -50,7 +52,40 @@ class DocumentController extends Controller
         }
     }
 
-    public function saveFile(int $id , UploadedFile $file)
+    public function saveTypeDoc(TypeDoc $request): JsonResponse
+    {
+        try {
+            TypeDocModel::storeDoc($request->name, $request->description);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Registro guardado'
+            ], 200);
+        }catch(Exception $e){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Estamos experimentando problemas'
+            ], 500);
+        }
+    }
+
+    public function listTypeDoc(): JsonResponse
+    {
+        try {
+            $list  = TypeDocModel::select('id', 'name')
+                ->get();
+            return response()->json([
+                'status' => 'success',
+                'data' =>  $list
+            ], 200);
+        }catch(Exception $e){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Estamos experimentando problemas'
+            ], 500);
+        }
+    }
+
+    private function saveFile(int $id , UploadedFile $file)
     {
         $extension = $file->getClientOriginalExtension();
         $uniqueName = time() . '_' . $id . '.' . $extension;
