@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 use App\Models\Banners;
@@ -65,27 +66,40 @@ class BannerController extends Controller
         }
     }
 
-
     public function getBanners (Request $request): JsonResponse
     {
         $request->validate(['numberItems' => 'required|numeric' ]);
         try {
-            $images = BannerModel::getListBanner($request->numberItems);
-            return response()->json(['status'=> 'success', 'message' => 'List get successfully', 'data' => $images], 200);
+            $images = Banners::getListBanner($request->numberItems);
+            return response()->json([
+                'status'=> 'success',
+                'data' => $images
+            ], 200);
         }  catch(\Exception $e){
-            return response()->json(['status'=>'error', 'messsage' => 'No mis imagenes'], 500);
+            return response()->json([
+                'status'=>'error', 
+                'messsage' => 'Sin lista'
+            ], 500);
         }
     }
 
-    public function deleteBanner(Request $request): JsonResponse
+    public function delete(Request $request): JsonResponse
     {
         try{
-            $request->validate(['idBanner' => 'required|numeric']);
-            $file = BannerModel::deleteBanner($request->idBanner);
+            $request->validate(['bannerId' => 'required|numeric']);
+            $file = Banners::deleteBanner($request->bannerId);
             Storage::disk('public')->delete($file);
             return response()->json(['status'=>'success', 'message' => 'Banner eliminado.'], 200);
+        } catch(ValidationException $e){
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 400);
         }catch(\Exception $e){
-            return response()->json(['status'=>'error', 'messsage' => $e->getMessage()], 500);
+            return response()->json([
+                'status'=>'error',
+                 'messsage' => $e->getMessage()
+            ], 500);
         }
     }
 } 
