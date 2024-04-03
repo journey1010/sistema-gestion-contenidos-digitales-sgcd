@@ -28,7 +28,10 @@ class AuthController extends Controller
       }
   
       $user = Auth::guard('api')->user();
-      $token = JWTAuth::claims(['type' => $user->rol])->fromUser($user);
+      $token = JWTAuth::claims([
+          'type' => $user->rol,
+          'email' => $user->email
+        ])->fromUser($user);
       
       return response()->json([
           'status' => 'success',
@@ -44,7 +47,7 @@ class AuthController extends Controller
         
           $email = $oldToken->getPayload()->get('email');
           $user = User::where('email', $email)->first();
-          if (!$user || !$user->status) {
+          if (!$user && $user->status == 0) {
             return response()->json([
               'status' => 'error',
               'message' => "Esta cuenta de usuario, esta Inactiva",
@@ -61,7 +64,7 @@ class AuthController extends Controller
         } catch (\Exception $e) {
           return response()->json([
             'status' => 'error',
-            'message' => 'Ocurrio un problema al generar al token',
+            'message' => 'Estamos experimentando dificultades'
           ], 401);
         }
     }
