@@ -1,0 +1,7 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/gorel/public_html/api-ufii.regionloreto.gob.pe
+    - /bin/rsync -a --exclude 'index.php' /home/gorel/repositories/ufii/public/ $DEPLOYPATH
+    - export DEPLOYPATH=/home/gorel/web_ufii/
+    - /bin/rsync -a --exclude 'public/' * $DEPLOYPATH

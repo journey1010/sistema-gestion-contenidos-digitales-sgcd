@@ -73,7 +73,7 @@ class DocumentController extends Controller
     public function listDocPerType(Paginate $request): JsonResponse
     {
         try{
-            if($request->has('typeDocId')){
+            if(!$request->has('typeDocId')){
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Debe proporcionar el ID del tipo de documento',
