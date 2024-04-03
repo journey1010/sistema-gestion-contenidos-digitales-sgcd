@@ -41,6 +41,8 @@ class LoginRequest extends FormRequest
         return [
             'email' => ['required', 'email', new isUserActive ],
             'password' => ['required', 'string', new PasswordVerify],
+            'rol' => 'required|numeric',
+
         ];
     }
 
@@ -51,6 +53,8 @@ class LoginRequest extends FormRequest
             'email.email' => 'Correo no valido',
             'password.required' => 'Sin contraseña',
             'password.string' => 'Contraseña debe ser de tipo string',
+            'rol.required' => 'Un rol es requerido',
+            'rol.numeric' => 'Rol es numérico'
         ];
     }
 }
