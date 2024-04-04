@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\ListUser;
 use App\Http\Requests\ChangePass;
 
 use App\Models\User;
@@ -102,7 +103,7 @@ class AuthController extends Controller
           ], 404);
         }
         return response()->json([
-          'status' => 'error',
+          'status' => 'success',
           'message' => 'Contraseña guardada'
         ], 200);
       }catch(\Exception $e){
@@ -110,6 +111,25 @@ class AuthController extends Controller
           'status' => 'error',
           'message' => 'Estamos experimentando problemas',
         ], 500);
+      }
+    }
+
+    public function listUser(ListUser $request)
+    {
+      try{
+        $list = User::select('id', 'name', 'email', 'status', 'created_at as date')
+          ->orderBy('created_at', 'desc')
+          ->paginate($request->numberItems, ['*'], 'page', $request->page);
+        return response()->json([
+          'status' => 'succes',
+          'items' => $list->items(),
+          'total_items' => $list->total(),
+        ], 200);
+      }catch(\Exception $e){
+        return response()->json([
+          'status' => 'error',
+          'message' => 'Estamos experimentando problemas'
+        ]);
       }
     }
 }
