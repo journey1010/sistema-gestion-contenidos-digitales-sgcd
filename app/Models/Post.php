@@ -36,7 +36,7 @@ class Post extends Model
 
    public static function getPaginatePost(int $numberItems, int $currentPage)
    {
-        $lists = self::select('id', 'title', 'description', 'pathFile')
+        $lists = self::select('id', 'title', 'description', 'path_file as file')
                 ->orderBy('created_at', 'desc')
                 ->paginate($numberItems, ['*'], 'page', $currentPage);
         $list = [

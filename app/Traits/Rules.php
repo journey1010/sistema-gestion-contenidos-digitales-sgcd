@@ -28,9 +28,7 @@ trait Rules {
         return [
             'files.*' => [
                 'required',
-                'image',
-                'mimetypes:image/*', 
-                'dimensions: min-width=1000|min-height:500', 
+                'mimes:png,jpg,jpeg,bmp,gif,jiff'
               ],
         ];
     }
@@ -48,7 +46,7 @@ trait Rules {
     public function postFile()
     {
         return [
-            'file' => 'required|image|mimetypes:image/*|dimensions: min-width=1000|min-height:500',
+            'file' => 'required|mimes:png,jpg,jpeg,bmp,gif,jiff',
         ];
     }
 
