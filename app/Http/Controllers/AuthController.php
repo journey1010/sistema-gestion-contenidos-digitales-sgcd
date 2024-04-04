@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\ChangePass;
 
 use App\Models\User;
 
@@ -89,5 +90,10 @@ class AuthController extends Controller
           'message' => 'Ocurrio un error inesperado al guardar!'
         ], 500);
       }
+    }
+
+    public function changePass(ChangePass $request)
+    {
+      
     }
 }

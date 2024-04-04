@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
-
+use App\Rules\EmailVerify;
 use App\Rules\PasswordVerify;
 
 class RegisterRequest extends FormRequest
@@ -39,7 +39,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'email' => 'required|email',
+            'email' => ['required','email', new EmailVerify],
             'password' => ['required', new PasswordVerify],
             'rol' => 'required|string'
         ];
