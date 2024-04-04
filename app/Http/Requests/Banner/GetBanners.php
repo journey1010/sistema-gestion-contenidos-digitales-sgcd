@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Banner;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Traits\Rules;
 
-use App\Rules\isUserActive;
-use App\Rules\PasswordVerify;
-
-class LoginRequest extends FormRequest
+class GetBanners extends FormRequest
 {
+    use Rules; 
+
     protected $stopOnFirstFailure = true;
     /**
      * Determine if the user is authorized to make this request.
@@ -26,11 +26,10 @@ class LoginRequest extends FormRequest
         $jsonResponse  = new JsonResponse([
             'status' => 'error',
             'message' => messageValidation($validator),
-        ], 422);
+        ]);
 
         throw new HttpResponseException($jsonResponse);
     }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -38,19 +37,6 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'email' => ['required', 'email', new isUserActive ],
-            'password' => ['required', 'string', new PasswordVerify],
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'email.required' => 'Sin correo tílin no hay pase',
-            'email.email' => 'Correo no valido',
-            'password.required' => 'Sin contraseña',
-            'password.string' => 'Contraseña debe ser de tipo string',
-        ];
+        return array_merge([],$this->combine('numberItems'));
     }
 }
