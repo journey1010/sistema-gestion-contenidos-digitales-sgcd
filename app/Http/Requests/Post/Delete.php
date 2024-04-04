@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Banner;
+namespace App\Http\Requests\Post;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Exceptions\HttpResponseException;
+
 use App\Traits\Rules;
 
-class GetBanners extends FormRequest
+class Delete extends FormRequest
 {
     use Rules; 
-
     protected $stopOnFirstFailure = true;
     /**
      * Determine if the user is authorized to make this request.
@@ -37,6 +37,6 @@ class GetBanners extends FormRequest
      */
     public function rules(): array
     {
-        return array_merge([],$this->combine('numberItems'));
+        return array_merge([],$this->combine('postId'));
     }
 }

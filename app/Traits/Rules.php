@@ -44,4 +44,36 @@ trait Rules {
     {
         return ['bannerId' => 'required|numeric'];
     }
+
+    public function postFile()
+    {
+        return [
+            'file' => 'required|image|mimetypes:image/*|dimensions: min-width=1000|min-height:500',
+        ];
+    }
+
+    public function title()
+    {
+        return ['title'=>'required|string'];
+    }
+
+    public function description()
+    {
+        return ['description' => 'required|string|max:600'];
+    }
+
+    public function userId()
+    {
+        return ['userId' => 'required|numeric'];
+    }
+
+    public function page()
+    {
+        return ['page' => 'required|numeric'];
+    }
+
+    public function postId()
+    {
+        return ['postId' => 'required|numeric'];
+    }
 }

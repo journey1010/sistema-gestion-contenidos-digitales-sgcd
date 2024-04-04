@@ -37,7 +37,7 @@ class Banners extends Model
     public static function getListBanner($numberItems)
     {
         $listBanner = DB::table('banners as b')
-        ->select('b.path_file as file')
+        ->select('b.id', 'b.path_file as file')
         ->where('b.status', '=', '1')
         ->orderBy('b.date', 'desc')
         ->take($numberItems)
