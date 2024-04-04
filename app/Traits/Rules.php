@@ -2,6 +2,9 @@
 
 namespace App\Traits;
 
+use  App\Rules\PasswordVerify;
+use  App\Rules\EmailVerify;
+ 
 trait Rules {
 
     public function combine(...$rulesSets)
@@ -22,7 +25,6 @@ trait Rules {
         return $rules;
     }
     
-
     public function banner()
     {
         return [
@@ -73,5 +75,15 @@ trait Rules {
     public function postId()
     {
         return ['postId' => 'required|numeric'];
+    }
+
+    public function email()
+    {
+        return ['email' => ['required','email', new EmailVerify]];
+    }
+
+    public function password()
+    {
+        return ['password' => ['required', new PasswordVerify]];
     }
 }

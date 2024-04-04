@@ -68,4 +68,17 @@ class User extends Authenticatable implements JWTSubject
             'rol' => $rol,
         ]); 
     }
+
+    public static function changePassword(string $password, int $userId): bool
+    {   
+        $user = User::where('id', $userId)
+                ->first();
+        if($user){
+            $user->password =  Hash::make($password);
+            $user->save();
+            return true;
+        } else  {
+            return false; 
+        }
+    }
 }
