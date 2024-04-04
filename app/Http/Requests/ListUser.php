@@ -3,15 +3,32 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Traits\Rules;
 
 class ListUser extends FormRequest
 {
+    use Rules;
+
+    protected $stopOnFirstFailure = true;
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $jsonResponse  = new JsonResponse([
+            'status' => 'error',
+            'message' => messageValidation($validator),
+        ],422);
+
+        throw new HttpResponseException($jsonResponse);
     }
 
     /**

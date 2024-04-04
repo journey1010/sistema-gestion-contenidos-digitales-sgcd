@@ -9,6 +9,7 @@ use App\Http\Controllers\PostController;
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::patch('/auth/change/password', [AuthController::class, 'changePass']);
+Route::get('/auth/user/list', [AuthController::class, 'listUser']);
 Route::post('/user/register', [AuthController::class, 'register']);
 Route::post('/auth/refresh', [AuthController::class,  'refreshToken']);
 Route::post('/doc/new', [DocumentController::class, 'save']);
