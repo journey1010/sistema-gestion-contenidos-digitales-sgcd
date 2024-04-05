@@ -20,7 +20,6 @@ class Post extends Model
        'created_at'
    ];
 
-
    public static function savePost(string $title, string $description, string $originNameFile, string $pathFile, int $userId)
    {
         date_default_timezone_set('America/Lima');
@@ -52,6 +51,4 @@ class Post extends Model
             ->where('id', $postId)
             ->first(); 
    }
-
-
 }
