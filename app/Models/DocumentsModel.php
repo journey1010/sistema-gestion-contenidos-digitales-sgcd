@@ -38,7 +38,6 @@ class DocumentsModel extends Model
         $lists = DB::table('docs as d')
                 ->select('d.title', 'd.description', 'd.path_file as file', 't.name')
                 ->join('type_docs as t', 'd.type_doc_id', '=', 't.id')
-                ->where('d.type_doc_id', '=', 1)
                 ->orderByDesc('d.created_at')
                 ->paginate($itemsPerPage, ['*'], 'page', $page);
         $list =[
