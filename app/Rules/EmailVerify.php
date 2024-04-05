@@ -18,7 +18,7 @@ class EmailVerify implements ValidationRule
         $user =  DB::table('users')
             ->where('email', $value)
             ->first();
-        if(!$user){
+        if($user){
             $fail('Este correo esta en uso');
         }
     }
