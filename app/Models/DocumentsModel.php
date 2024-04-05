@@ -36,7 +36,7 @@ class DocumentsModel extends Model
     public static function listAllDoc(int $itemsPerPage = 4, int $page =1)
     {   
         $lists = DB::table('docs as d')
-                ->select('d.title', 'd.description', 'd.path_file as file', 't.name')
+                ->select('d.title', 'd.description', 'd.path_file as file', 't.name', 'd.created_at as date')
                 ->join('type_docs as t', 'd.type_doc_id', '=', 't.id')
                 ->orderByDesc('d.created_at')
                 ->paginate($itemsPerPage, ['*'], 'page', $page);
@@ -51,7 +51,7 @@ class DocumentsModel extends Model
     public static function listDocPerType(int $itemsPerPage = 4, int $page =1, int $typeDocId)
     {   
         $lists = DB::table('docs as d')
-                ->select('d.title', 'd.description', 'd.path_file as file', 't.name')
+                ->select('d.title', 'd.description', 'd.path_file as file', 't.name', 'd.created_at as date')
                 ->join('type_docs as t', 'd.type_doc_id', '=', 't.id')
                 ->where('d.type_doc_id', '=', $typeDocId)
                 ->orderByDesc('d.created_at')
