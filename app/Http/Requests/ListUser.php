@@ -38,6 +38,6 @@ class ListUser extends FormRequest
      */
     public function rules(): array
     {
-        return array_merge([], $this->combine('page', 'numberItems'));
+        return array_merge([], $this->combine('page', 'numberItems', 'appName'));
     }
 }

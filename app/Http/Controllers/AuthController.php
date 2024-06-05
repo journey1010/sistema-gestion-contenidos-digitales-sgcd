@@ -120,6 +120,7 @@ class AuthController extends Controller
     {
       try{
         $list = User::select('id', 'name', 'email', 'status', 'created_at as date')
+          ->where('app_name', $request->appName)
           ->orderBy('created_at', 'desc')
           ->paginate($request->numberItems, ['*'], 'page', $request->page);
         return response()->json([
