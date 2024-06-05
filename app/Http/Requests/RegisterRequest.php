@@ -52,7 +52,7 @@ class RegisterRequest extends FormRequest
             'name.required' => 'Un nombre completo es requerido',
             'email.required' =>  'Un email es requerido',
             'password.required' => 'Una contraseña es requerida',
-            'rol.required' => 'un rol es requerido'
+            'rol.required' => 'un rol es requerido',
             'appName.required' =>  'No proporcionado'
         ];
     }
