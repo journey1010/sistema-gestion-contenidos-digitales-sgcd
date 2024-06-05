@@ -22,7 +22,7 @@ class PostController extends Controller
     {
         try {
             list($uniqueName, $path) = $this->saveFile($request->userId, $request->file('file'));
-            Post::savePost($request->title, $request->description,$uniqueName, $path, $request->userId);
+            Post::savePost($request->appName,$request->title, $request->description,$uniqueName, $path, $request->userId);
             return response()->json([
                 'status' => 'success',
                  'message'=> 'Publicación registrada'
@@ -38,7 +38,7 @@ class PostController extends Controller
     public function paginatePosts(Paginate $request)
     {
         try {
-            $paginatePosts = Post::getPaginatePost($request->numberItems, $request->page);
+            $paginatePosts = Post::getPaginatePost($request->appName, $request->numberItems, $request->page);
             return response()->json([
                 'status' => 'success',
                 'data' => $paginatePosts['items'],

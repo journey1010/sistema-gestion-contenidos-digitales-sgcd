@@ -33,6 +33,7 @@ class DocumentController extends Controller
             list($originalName,$pathFile) = $this->saveFile($request->userId, $request->file('file'));
             
             DocumentsModel::saveDoc(
+                $request->appName,
                 $request->typeDoc,
                 $request->userId,
                 $request->title,
@@ -79,7 +80,7 @@ class DocumentController extends Controller
                     'message' => 'Debe proporcionar el ID del tipo de documento',
                 ], 422);
             }
-            $list = DocumentsModel::listDocPerType($request->itemsPerPage,$request->page, $request->typeDocId);
+            $list = DocumentsModel::listDocPerType($request->appName, $request->itemsPerPage,$request->page, $request->typeDocId);
             return response()->json([
                 'status' => 'success',
                 'data' => $list['items'],

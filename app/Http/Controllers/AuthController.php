@@ -80,6 +80,7 @@ class AuthController extends Controller
           $request->email,
           $request->password,
           $request->rol,
+          
         );
         return response()->json([
           'status' => 'success',

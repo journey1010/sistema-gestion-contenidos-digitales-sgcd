@@ -13,6 +13,7 @@ class DocumentsModel extends Model
     protected $table = 'docs';
 
     protected $fillable = [
+        'appName',
         'type_doc_id',
         'user_id',
         'title',
@@ -21,9 +22,10 @@ class DocumentsModel extends Model
         'path_file'
     ];
 
-    public static function saveDoc(int $typeDoc, int $userId, string $title, string $description, string $originalName, string $pathFile)
+    public static function saveDoc(string $appName, int $typeDoc, int $userId, string $title, string $description, string $originalName, string $pathFile)
     {
         return self::create([
+            'appName' => $appName,
             'type_doc_id' => $typeDoc,
             'user_id' => $userId,
             'title' => $title,
@@ -33,11 +35,12 @@ class DocumentsModel extends Model
         ]);
     }
 
-    public static function listAllDoc(int $itemsPerPage = 4, int $page =1)
+    public static function listAllDoc(string $appName, int $itemsPerPage = 4, int $page =1)
     {   
         $lists = DB::table('docs as d')
                 ->select('d.title', 'd.description', 'd.path_file as file', 't.name', 'd.created_at as date')
                 ->join('type_docs as t', 'd.type_doc_id', '=', 't.id')
+                ->where('d.app_name', $appName)
                 ->orderByDesc('d.created_at')
                 ->paginate($itemsPerPage, ['*'], 'page', $page);
         $list =[
@@ -48,12 +51,13 @@ class DocumentsModel extends Model
         return $list;
     }  
 
-    public static function listDocPerType(int $itemsPerPage = 4, int $page =1, int $typeDocId)
+    public static function listDocPerType(string $appName, int $itemsPerPage = 4, int $page =1, int $typeDocId)
     {   
         $lists = DB::table('docs as d')
                 ->select('d.title', 'd.description', 'd.path_file as file', 't.name', 'd.created_at as date')
                 ->join('type_docs as t', 'd.type_doc_id', '=', 't.id')
                 ->where('d.type_doc_id', '=', $typeDocId)
+                ->where('d.app_name', $appName)
                 ->orderByDesc('d.created_at')
                 ->paginate($itemsPerPage, ['*'], 'page', $page);
         $list =[

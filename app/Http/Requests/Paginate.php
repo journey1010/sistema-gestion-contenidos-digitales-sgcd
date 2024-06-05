@@ -35,6 +35,7 @@ class Paginate extends FormRequest
     public function rules(): array
     {
         return [
+            'appName' => 'required|string',
             'itemsPerPage' => 'required|numeric',
             'page' => 'required|numeric'
         ];

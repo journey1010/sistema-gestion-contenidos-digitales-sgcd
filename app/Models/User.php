@@ -19,6 +19,8 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
+        'appName',
+        'rol',
         'name',
         'email',
         'password',
@@ -59,13 +61,14 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public static function saveUser(string $name, string $email, string $password, int $rol): void
+    public static function saveUser(string $appName, string $name, string $email, string $password, int $rol): void
     {
         $user  = User::insert([
             'name' => $name,
             'email' => $email,
             'password' => Hash::make($password),
             'rol' => $rol,
+            'app_name' => $appName
         ]); 
     }
 

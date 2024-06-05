@@ -38,6 +38,6 @@ class Create extends FormRequest
      */
     public function rules(): array
     {
-        return array_merge([],$this->combine('postFile', 'description', 'userId'));
+        return array_merge([],$this->combine('postFile', 'description', 'userId', 'appName'));
     }
 }

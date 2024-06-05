@@ -27,12 +27,17 @@ trait Rules {
     
     public function banner()
     {
-        return [
+        return [ 
             'files.*' => [
                 'required',
                 'mimes:png,jpg,jpeg,bmp,gif,jiff'
               ],
         ];
+    }
+
+    public function appName()
+    {
+        return ['appName' => 'required|string'];
     }
 
     public function numberItems()

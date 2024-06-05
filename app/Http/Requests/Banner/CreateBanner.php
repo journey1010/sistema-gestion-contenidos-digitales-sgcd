@@ -37,6 +37,6 @@ class CreateBanner extends FormRequest
      */
     public function rules(): array
     {
-        return array_merge([],$this->combine('banner'));
+        return array_merge([],$this->combine('banner', 'appName'));
     }
 }

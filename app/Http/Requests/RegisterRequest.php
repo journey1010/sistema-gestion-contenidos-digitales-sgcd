@@ -41,7 +41,8 @@ class RegisterRequest extends FormRequest
             'name' => 'required|string',
             'email' => ['required','email', new EmailVerify],
             'password' => ['required', new PasswordVerify],
-            'rol' => 'required|string'
+            'rol' => 'required|string',
+            'appName' => 'required|string'
         ];
     }
 

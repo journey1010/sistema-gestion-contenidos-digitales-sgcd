@@ -32,6 +32,7 @@ class BannerController extends Controller
                         'public'
                     );
                     Banners::saveBanner(
+                        $request->appName,
                         $extension,
                         $path,
                     );
@@ -61,7 +62,7 @@ class BannerController extends Controller
     public function getBanners (GetBanners $request): JsonResponse
     {
         try {
-            $images = Banners::getListBanner($request->numberItems);
+            $images = Banners::getListBanner($request->appName,$request->numberItems);
             return response()->json([
                 'status'=> 'success',
                 'data' => $images

@@ -27,9 +27,7 @@ return new class extends Migration
             $table->string('app_name')->nullable();
         });
 
-        Schema::table('posts', function(Blueprint $table){
-            $table->string('app_name')->nullable();
-        });
+        Schema::dropIfExists('posts');
     }
 
     /**

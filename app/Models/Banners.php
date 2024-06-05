@@ -14,6 +14,7 @@ class Banners extends Model
 
     protected $table = 'banners';
     protected $fillable = [
+        'appName',
         'type_file',
         'path_file',
         'status',
@@ -22,11 +23,12 @@ class Banners extends Model
 
     public $timestamps = false;
 
-    public static function saveBanner(string $typeFile, string $pathFile)
+    public static function saveBanner(string $appName, string $typeFile, string $pathFile)
     {
         date_default_timezone_set('America/Lima');
 
         return self::create([
+            'app_name' => $appName,
             'type_file' => $typeFile,
             'path_file' => $pathFile,
             'status' => 1,
@@ -34,11 +36,12 @@ class Banners extends Model
         ]);
     } 
 
-    public static function getListBanner($numberItems)
+    public static function getListBanner(string $appName, int $numberItems)
     {
         $listBanner = DB::table('banners as b')
         ->select('b.id', 'b.path_file as file')
         ->where('b.status', '=', '1')
+        ->where('b.app_name', $appName)
         ->orderBy('b.date', 'desc')
         ->take($numberItems)
         ->get();

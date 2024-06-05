@@ -12,6 +12,7 @@ class Post extends Model
     protected $table =  'publicaciones';
 
     protected $fillable = [
+       'appName',
        'title',
        'description',
        'origin_name_file',
@@ -20,10 +21,11 @@ class Post extends Model
        'created_at'
    ];
 
-   public static function savePost(string $title, string $description, string $originNameFile, string $pathFile, int $userId)
+   public static function savePost(string $appName, string $title, string $description, string $originNameFile, string $pathFile, int $userId)
    {
         date_default_timezone_set('America/Lima');
         return self::create([
+            'app_name' => $appName,
             'title' => $title,
             'description' => $description,
             'origin_name_file' => $originNameFile,
@@ -33,9 +35,10 @@ class Post extends Model
         ]);
    }
 
-   public static function getPaginatePost(int $numberItems, int $currentPage)
+   public static function getPaginatePost(string $appName, int $numberItems, int $currentPage)
    {
         $lists = self::select('id', 'title', 'description', 'path_file as file', 'created_at as date')
+                ->where('app_name', $appName)
                 ->orderBy('created_at', 'desc')
                 ->paginate($numberItems, ['*'], 'page', $currentPage);
         $list = [

@@ -37,6 +37,7 @@ class SaveDocRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'appName' => 'required|string', 
             'typeDoc' => 'required|numeric',
             'userId' => 'required|numeric',
             'title' => 'required|string|max:255',
