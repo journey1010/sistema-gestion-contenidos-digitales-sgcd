@@ -57,7 +57,7 @@ class DocumentController extends Controller
     public function listDocAll(Paginate $request): JsonResponse
     {
         try{
-            $list = DocumentsModel::listAllDoc($request->itemsPerPage, $request->page);
+            $list = DocumentsModel::listAllDoc($request->appName, $request->itemsPerPage, $request->page);
             return response()->json([
                 'status' => 'success',
                 'data' => $list['items'],
