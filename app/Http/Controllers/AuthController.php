@@ -76,6 +76,7 @@ class AuthController extends Controller
     {
       try {
         User::saveUser(
+          $request->appName,
           $request->name,
           $request->email,
           $request->password,
