@@ -13,7 +13,7 @@ class DocumentsModel extends Model
     protected $table = 'docs';
 
     protected $fillable = [
-        'appName',
+        'app_name',
         'type_doc_id',
         'user_id',
         'title',
@@ -25,7 +25,7 @@ class DocumentsModel extends Model
     public static function saveDoc(string $appName, int $typeDoc, int $userId, string $title, string $description, string $originalName, string $pathFile)
     {
         return self::create([
-            'appName' => $appName,
+            'app_name' => $appName,
             'type_doc_id' => $typeDoc,
             'user_id' => $userId,
             'title' => $title,

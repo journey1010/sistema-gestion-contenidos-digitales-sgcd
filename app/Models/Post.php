@@ -12,7 +12,7 @@ class Post extends Model
     protected $table =  'publicaciones';
 
     protected $fillable = [
-       'appName',
+       'app_name',
        'title',
        'description',
        'origin_name_file',
