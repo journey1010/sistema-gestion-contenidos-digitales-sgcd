@@ -14,7 +14,7 @@ class Banners extends Model
 
     protected $table = 'banners';
     protected $fillable = [
-        'appName',
+        'app_name',
         'type_file',
         'path_file',
         'status',
